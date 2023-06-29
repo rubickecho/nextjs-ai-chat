@@ -26,7 +26,7 @@
     "@vercel/analytics": "^1.0.1",
     "@vercel/kv": "^0.2.1",
     "@vercel/og": "^0.5.7",
-    "ai": "^2.1.6",
+    "ai": "^2.1.8",
     "class-variance-authority": "^0.4.0",
     "clsx": "^1.2.1",
     "focus-trap-react": "^10.1.1",
@@ -43,7 +43,8 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-textarea-autosize": "^8.4.1",
     "remark-gfm": "^3.0.1",
-    "remark-math": "^5.1.1"
+    "remark-math": "^5.1.1",
+    "langchain": "^0.0.86"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",

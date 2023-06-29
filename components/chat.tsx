@@ -21,6 +21,7 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 
+// 是否是预览版本
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
@@ -32,15 +33,21 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     'ai-token',
     null
   )
+  const [previewBasePath, setPreviewBasePath] = useLocalStorage<string | null>(
+    'ai-base-path',
+    null
+  )
   const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
-  const { messages, append, reload, stop, isLoading, input, setInput } =
+  const [previewBasePathInput, setPreviewBasePathInput] = useState(previewBasePath ?? '')
+  const { messages, append, reload, stop, isLoading, input, setInput, handleSubmit } =
     useChat({
       initialMessages,
       id,
       body: {
         id,
-        previewToken
+        previewToken,
+        previewBasePath
       },
       onResponse(response) {
         if (response.status === 401) {
@@ -94,10 +101,16 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
             placeholder="OpenAI API key"
             onChange={e => setPreviewTokenInput(e.target.value)}
           />
+          <Input
+            value={previewBasePathInput}
+            placeholder="OpenAI API Base Path(eg. 'https://api.openai.com/v1')"
+            onChange={e => setPreviewBasePathInput(e.target.value)}
+          />
           <DialogFooter className="items-center">
             <Button
               onClick={() => {
                 setPreviewToken(previewTokenInput)
+                setPreviewBasePath(previewBasePathInput)
                 setPreviewTokenDialog(false)
               }}
             >
